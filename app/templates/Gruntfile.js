@@ -16,6 +16,7 @@ module.exports = function (grunt) {
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
+    uncss: 'grunt-uncss',
     buildcontrol: 'grunt-build-control'
   });
 
@@ -450,6 +451,42 @@ module.exports = function (grunt) {
       }
     },
 
+      uncss: {
+        dist: {
+            options: {
+              ignore: [
+
+
+                        /\.open/,
+                         /(#|\.)fancybox(\-[a-zA-Z]+)?/,
+                          /(#|\.)item(\-[a-zA-Z]+)?/,
+                        /(#|\.)active(\-[a-zA-Z]+)?/,
+                        /(#|\.)modal(\-[a-zA-Z]+)?/,
+                        // Bootstrap selectors added via JS
+                        /\w\.in/,
+                        ".fade",
+                        ".collapse",
+                        ".collapsing",
+                        /(#|\.)navbar(\-[a-zA-Z]+)?/,
+                        /(#|\.)dropdown(\-[a-zA-Z]+)?/,
+                        /(#|\.)(open)/,
+                        /^\.scroll(\-)?/,
+                        /^\.scrollbar(\-)?/,
+                       // currently only in a IE conditional, so uncss doesn't see it
+                        ".close",
+                        ".alert-dismissible"
+
+                    ],
+                    stylesheets: ['../../../.tmp/app/app.css'],
+                // stylesheets: ['app.css']
+
+            },
+            files: {
+                '.tmp/app/app.css': [ '<%= yeoman.client %>/**/*.html' ]
+            }
+        }
+    },
+
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [<% if(filters.coffee) { %>
@@ -858,6 +895,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'autoprefixer',
     'ngtemplates',
+    'uncss',
     'concat',
     'ngAnnotate',
     'copy:dist',
