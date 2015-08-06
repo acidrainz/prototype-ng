@@ -4,10 +4,12 @@
       var controller = (function(){
                var vm;
                var userService;
-               controller.$inject = ['UserService'];
-               function controller(UserService){
+               var location;
+               controller.$inject = ['UserService','$location'];
+               function controller(UserService,$location){
                   vm =this;
                   userService = UserService;
+                   location = $location;
 
               }
 
@@ -15,7 +17,7 @@
 
                     userService.addUser(vm.data)
                       .success(function(data, status, headers, config){
-                          console.log(data);
+                          location.path('/gallery');
                       })
                       .error(function(data, status, headers, config){
                         console.log('error');

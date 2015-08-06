@@ -4,9 +4,11 @@
       var controller = (function(){
                var vm;
                var userService;
-               controller.$inject = ['UserService'];
-               function controller(UserService){
+               var location;
+               controller.$inject = ['UserService','$location'];
+               function controller(UserService,$location){
                   vm =this;
+                  location = $location;
                    userService = UserService;
 
                    userService.getAllUsers()
@@ -18,10 +20,24 @@
                       });
               }
 
+              controller.prototype.editUser = function(id){
+
+                  location.path('/gallery-edit/' + id);
+              }
+
+               controller.prototype.deleteUser = function(id){
+                   userService.removeUser(id)
+                      .success(function(data, status, headers, config){
+                         console.log(vm.list);
+                      })
+                      .error(function(data, status, headers, config){
+                        console.log('error');
+                      });
+              }
               controller.prototype.submitPost = function(){
                     userService.addUser(vm.data)
                       .success(function(data, status, headers, config){
-                          console.log(data);
+                          location.path('/gallery');
                       })
                       .error(function(data, status, headers, config){
                         console.log('error');

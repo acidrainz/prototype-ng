@@ -19,9 +19,12 @@
       // users.push(user);
     };
 
-    userService.prototype.removeUser = function(user, users){
-      var index = users.indexOf(user);
-      users.splice(index);
+    userService.prototype.getUser = function(id){
+       return http.get('/api/users/'+id);
+    };
+
+    userService.prototype.removeUser = function(id){
+         return http.delete('/api/users/'+id);
     };
 
     userService.prototype.updateUser = function(user, users){
