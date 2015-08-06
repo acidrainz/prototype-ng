@@ -14,7 +14,7 @@ exports.index = function(req, res) {<% if (!filters.mongoose) { %>
 
 // Get a single <%= name %>
 exports.show = function(req, res) {
-  <%= classedName %>.findById(req.params.id, function (err, <%= name %>) {
+  <%= classedName %>.findOne({user_id:req.params.id}, function (err, <%= name %>) {
     if(err) { return handleError(res, err); }
     if(!<%= name %>) { return res.status(404).send('Not Found'); }
     return res.json(<%= name %>);
@@ -45,7 +45,7 @@ exports.update = function(req, res) {
 
 // Deletes a <%= name %> from the DB.
 exports.destroy = function(req, res) {
-  <%= classedName %>.findById(req.params.id, function (err, <%= name %>) {
+  <%= classedName %>findOne({user_id:req.params.id}, function (err, <%= name %>) {
     if(err) { return handleError(res, err); }
     if(!<%= name %>) { return res.status(404).send('Not Found'); }
     <%= name %>.remove(function(err) {

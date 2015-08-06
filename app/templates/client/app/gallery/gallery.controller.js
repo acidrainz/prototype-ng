@@ -9,15 +9,8 @@
                function controller(UserService,$location){
                   vm =this;
                   location = $location;
-                   userService = UserService;
-
-                   userService.getAllUsers()
-                      .success(function(data, status, headers, config){
-                         vm.lists = data;
-                      })
-                      .error(function(data, status, headers, config){
-                        console.log('error');
-                      });
+                  userService = UserService;
+                  vm.loadData();
               }
 
               controller.prototype.editUser = function(id){
@@ -28,7 +21,16 @@
                controller.prototype.deleteUser = function(id){
                    userService.removeUser(id)
                       .success(function(data, status, headers, config){
-                         console.log(vm.list);
+                          vm.loadData();
+                      })
+                      .error(function(data, status, headers, config){
+                        console.log('error');
+                      });
+              }
+              controller.prototype.loadData = function(){
+                    userService.getAllUsers()
+                      .success(function(data, status, headers, config){
+                         vm.lists = data;
                       })
                       .error(function(data, status, headers, config){
                         console.log('error');
