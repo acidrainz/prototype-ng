@@ -45,7 +45,7 @@ exports.update = function(req, res) {
 
 // Deletes a <%= name %> from the DB.
 exports.destroy = function(req, res) {
-  <%= classedName %>findOne({user_id:req.params.id}, function (err, <%= name %>) {
+  <%= classedName %>.findOne({user_id:req.params.id}, function (err, <%= name %>) {
     if(err) { return handleError(res, err); }
     if(!<%= name %>) { return res.status(404).send('Not Found'); }
     <%= name %>.remove(function(err) {
